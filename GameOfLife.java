@@ -32,7 +32,7 @@ public class GameOfLife
 	// I look at one board and use those cells to create the next board
 	int [][] board1;
 	int [][] board2;
-	
+
 	// number of generations to perform
 	int generations;
 
@@ -75,10 +75,10 @@ public class GameOfLife
 	private void setUp() throws IOException
 	{
 		BufferedReader buffer = new BufferedReader(new FileReader("Game Board"));
-		
+
 		// pre-read the 0th line because it will always be dead
 		buffer.readLine();
-		
+
 		// start at the first line because the 0th line will always be dead
 		int lineNum = 1;
 
@@ -120,31 +120,31 @@ public class GameOfLife
 
 					// index counter for array bin
 					int index = 0;
-					
+
 					// because each hex value is equal to 4 binary digits,
 					// you want to start at the last position relative to the ith
 					// location of the array
-					
+
 					/* Ex. array = [0,3,0,0,0,0,0,0]
-					*               0 1 2 3 4 5 6 7 
-					* 
-					*  The element at array[0] when converted to binary is 0000 so
-					*  the first four spaces on the line in the matrix will be 0000.
-					*  
-					*  The element at array[1] when converted to binary is 0011 so
-					*  the next four spaces on the same line will be 0011. 
-					*  
-					*  Therefore,the first eight spaces on this line are 00000011.
-					*/
+					 *               0 1 2 3 4 5 6 7 
+					 * 
+					 *  The element at array[0] when converted to binary is 0000 so
+					 *  the first four spaces on the line in the matrix will be 0000.
+					 *  
+					 *  The element at array[1] when converted to binary is 0011 so
+					 *  the next four spaces on the same line will be 0011. 
+					 *  
+					 *  Therefore,the first eight spaces on this line are 00000011.
+					 */
 					for (int j = i * 4; j < i * 4 + 4; j ++)
 					{
 						board1[lineNum][j] = Integer.valueOf(bin[index]);
-						
+
 						// increment the counter
 						index ++;
 					}
 				}
-				
+
 				// mark that you have read this line
 				lineNum++;
 			}
@@ -259,7 +259,7 @@ public class GameOfLife
 	}
 
 	/**
-	 * Looks at the two boolena values and determines 
+	 * Looks at the two boolean values and determines 
 	 * which board is the current board
 	 * 
 	 * @return
@@ -416,28 +416,26 @@ public class GameOfLife
 		// num will contain the four elements
 		String num = "";
 
-		// for every element in array
-		for (int i = 0; i < array.length; i ++)
+		// for every space in board
+		for (int row = 0; row < array.length; row ++)
 		{
-			for (int j = 0; j < array.length; j ++)
+			for (int column = 0; column < array.length; column ++)
 			{
-				// you have read 4 elements
+				// add the next element
+				num = num + array[row][column];
+				
+				// if your length is 4
 				if (num.length() == 4)
 				{
 					// convert it to hexadecimal
 					int binary = Integer.parseInt(String.valueOf(num), 2);
 					String hex = Integer.toHexString(binary);
 
+					// print out the hex value
 					System.out.print(hex);
 
-					// then reset num and add the next element to num
+					// then reset num
 					num = "";
-					num = num + String.valueOf(array [i][j]);
-				}
-				else
-				{
-					// otherwise add another element to num
-					num = num + String.valueOf(array [i][j]);
 				}
 			}
 			System.out.println();
